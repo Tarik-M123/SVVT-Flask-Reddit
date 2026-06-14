@@ -137,7 +137,7 @@ def forgot_password(token):
     return render_template('auth/forgot_password.html', form=form)
 
 # TODO change email    - generate_email_reset_token, confirm_email_reset_token
-@auth_blueprint.route('/change-email')
+@auth_blueprint.route('/change-email', methods=['GET', 'POST'])
 @login_required
 def request_change_email():
     form = RequestChangeEmailForm()

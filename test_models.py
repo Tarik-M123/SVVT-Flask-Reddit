@@ -1,5 +1,6 @@
 import pytest
-from app.models import User, Post
+from app.models import User, Post, Community, Reply
+from app import db
 
 
 # ---------- PASSWORD TESTS ----------
@@ -76,3 +77,31 @@ def test_post_repr(app):
     # The Post __repr__ should contain the post title.
     p = Post(title='Hello World')
     assert repr(p) == '<Post: Hello World>'
+
+# ---------- COMMUNITY TESTS ----------
+
+def test_community_repr(app):
+    c = Community(name='TestCommunity')
+    assert repr(c) == '<Community: TestCommunity>'
+
+def test_community_description(app):
+    c = Community(name='TestCommunity', description='This is a test community.')
+    assert c.description == 'This is a test community.'
+
+def test_community_timestamp(app):
+    c = Community(name='TestCommunity')
+    db.session.add(c)
+    db.session.flush()
+    assert c.timestamp is not None
+
+# ---------- REPLY TESTS ----------
+
+def test_reply_body(app):
+    from app.models import Reply
+    r = Reply(body='This is my reply')
+    assert r.body == 'This is my reply'
+
+def test_reply_repr(app):
+    from app.models import Reply
+    r = Reply(body='This is my reply')
+    assert repr(r) == '<Reply: This is my reply>'
